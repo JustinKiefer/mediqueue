@@ -214,9 +214,11 @@ document.getElementById('addPatientForm').addEventListener('submit', async funct
   form.classList.add('was-validated');
   if (!form.checkValidity()) return; // HTML5 Constraint Validation API
 
-  const name     = document.getElementById('newPatientName').value.trim();
-  const service  = document.getElementById('newPatientService').value;
-  const priority = document.getElementById('newPatientPriority').checked;
+  // Gather inputs via the native HTML5 FormData API
+  const formData = new FormData(form);
+  const name     = formData.get('patientName').trim();
+  const service  = formData.get('patientService');
+  const priority = formData.get('patientPriority') === 'on'; // checkbox checked => 'on'
 
   const submitBtn = form.querySelector('button[type="submit"]');
   submitBtn.disabled = true;
